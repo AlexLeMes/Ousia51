@@ -77,17 +77,6 @@ public class weapon : MonoBehaviour {
 
     void Update()
     {
-        
-        if (ischarging)
-        {
-            chargingEffect.Play();
-        }
-        else if(!ischarging)
-        {
-            chargingEffect.Stop();
-        }
-        
-
         //weaponpos = transform.position;
 
         if (gas <= 0)
@@ -99,11 +88,25 @@ public class weapon : MonoBehaviour {
             canshoot = true;
         }
 
+        if (Input.GetMouseButton(1)) //starts the timer for charging the plasma weapon
+        {
+            ischarging = true;
+        }
+
+        if (ischarging)
+        {
+            chargingEffect.Play();
+        }
+        else if (!ischarging)
+        {
+            chargingEffect.Stop();
+        }
+
+
         if (Input.GetMouseButton(1) && plasmadf) //starts the timer for charging the plasma weapon
         {
             powerattacktimer += Time.deltaTime;
             ischarging = true;
-            chargingEffect.Play();
         }
         if (Input.GetMouseButtonUp(1) && powerattacktimer > 2 && ischarging && plasmadf)
         {
@@ -119,6 +122,7 @@ public class weapon : MonoBehaviour {
         {
             shootPlasmaGun();
         }
+        
 
         /*
         if (flamethrowerpicked)
@@ -140,9 +144,6 @@ public class weapon : MonoBehaviour {
             fireInUse.SetActive(false);
             plasmaInUse.SetActive(true);
             gasBarObj.SetActive(false);
-
-
-
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -156,13 +157,11 @@ public class weapon : MonoBehaviour {
             plasmaInUse.SetActive(false);
             fireInUse.SetActive(true);
             gasBarObj.SetActive(true);
-
-
         }
 
         if (showAmmo)
         {
-            ammoText.text = "GAS: " + gas.ToString();
+            ammoText.text = "DEBUG: GAS: " + gas.ToString();
         }
         else if(!showAmmo)
         {
@@ -175,7 +174,7 @@ public class weapon : MonoBehaviour {
             flame.Play();
             shootFlameThrower();
             gas--;
-            gasBar.value = gas / 100;
+            gasBar.value = gas;
         }
         else
         {
